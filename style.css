@@ -1,0 +1,42 @@
+.calculator { 
+    box-shadow: -2px 12px 55px 3px rgba(0, 0, 0, 0.75);
+    height: 600px;
+    width: 400px;
+    /*center the calculator*/
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /*grid setup*/
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    }
+  
+  .display {
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+    grid-column: span 4;
+    text-align: right;
+    font-size: 75px;
+    font-family: arial;
+    letter-spacing: 10px;
+    }
+  
+  .operator-equal {
+    grid-column: span 2;
+  }
+  
+  .operator-del {
+    grid-column: span 2;
+  }
+  
+  button {
+    font-size: 30px;
+    border: 1px solid rgba(161, 158, 158, 0.75);
+    background-color: rgba(255, 255, 255, 0.75);
+  }
+  
+  .operator-clear {
+    color: red;
+  }
