@@ -88,7 +88,7 @@ function displayNumbers () {
 
             //get the first number before the operand 
             if (operand.length == 0) {
-                firstNumber = key.textContent
+                firstNumber += key.textContent
                 console.log ('logging firstNumber: ',firstNumber)
             } 
 
@@ -99,6 +99,10 @@ function displayNumbers () {
                 console.log ('logging secondNumber: ',secondNumber)
             }
             currentOper.textContent += key.textContent
+
+            if (operand == true ) {
+                console.log ('true')
+            }
         })
     })
 }
