@@ -21,6 +21,7 @@ const currentOper = document.querySelector('[data-current-operand]')
 let firstNumber = ''
 let secondNumber = ''
 let operand = ''
+let calculatedResult = ''
 
 /****
  * 
@@ -51,7 +52,7 @@ const setOperation = (operation, a, b) => {
             if (b != 0) {
                 return divide(a, b)
             } else {
-                return 'Cannot Divide By 0'
+                return 'error'
             }
         default:
             return
@@ -68,28 +69,34 @@ function updateDisplay () {
     displayOperator()
     displayResult()
     clearResult()
+    //deleteFromDisplay () 
 }
 
 updateDisplay ()
 
+/***
+ * 
+ * Populate Display
+ * 
+ */
 
 function displayNumbers () {
     numberButtons.forEach (button => {
         button.addEventListener('click', (e) => {
-            console.log (e.target)
+            //console.log (e.target)
             const key = button
 
             //get the first number before the operand 
             if (operand.length == 0) {
-                firstNumber += key.textContent
-                console.log (firstNumber)
-            }
+                firstNumber = key.textContent
+                console.log ('logging firstNumber: ',firstNumber)
+            } 
 
             //get the second number after the operand
             if (operand.length == 1) {
+                console.log ('logging length',operand.length)
                 secondNumber += key.textContent
-                //previousOper.textContent = currentOper.textContent 
-                console.log (secondNumber)
+                console.log ('logging secondNumber: ',secondNumber)
             }
             currentOper.textContent += key.textContent
         })
@@ -99,20 +106,28 @@ function displayNumbers () {
 function displayOperator () {
     operationButtons.forEach (button => {
         button.addEventListener('click', (e) => {
-            console.log (e.target)
+            //console.log (e.target)
             const key = button
+
             currentOper.textContent += key.textContent
             operand = key.textContent //stores operand value
-            console.log(operand)
+            console.log('logging displayOperator operand: ',operand)
         })
     })
 }
 
 function displayResult () {
     equalsButton.addEventListener('click', (e) => {
-        currentOper.textContent = setOperation(operand,Number(firstNumber),Number(secondNumber))
+        calculatedResult = setOperation(operand,Number(firstNumber),Number(secondNumber))
+        currentOper.textContent = calculatedResult
+        console.log ('logging calculatedResult = ',calculatedResult)
     })
 }
+/*
+function deleteFromDisplay () {
+    deleteButton.addEventListener('click', (e) => {
+    })
+}*/
 
 function clearResult () {
     clearButton.addEventListener('click', (e) => {
@@ -124,36 +139,3 @@ function clearResult () {
         operand = ''
     })
 }
-
-
-
-
-
-//===========================================
-//              OLD CODE                    
-//===========================================
-/*
-function displayNumbers () {
-    const numberRegex = /[0-9]/g;
-    const operandRegex = /[-+/*]/
-
-    numberButtons.forEach (button => {
-        button.addEventListener('click', (e) => {
-            console.log (e.target)
-            const key = button
-            if (operand.length == 0) {
-                firstNumber += key.textContent
-                console.log (firstNumber)
-            } else if (operand.length == 1) {
-                secondNumber += key.textContent
-                console.log (secondNumber)
-            }
-            const firstNumber = currentOper.textContent += key.textContent
-            const operand = currentOper.textContent
-            currentOper.textContent += key.textContent
-            console.log ('This is the first number',firstNumber.match(numberRegex).join('')) 
-            console.log ('This is the operand ',operand.match(operandRegex))
-        })
-    })
-}
-*/
