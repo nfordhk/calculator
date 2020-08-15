@@ -20,12 +20,9 @@ const currentOper = document.querySelector('[data-current-operand]')
 
 let firstNumber = ''
 let secondNumber = ''
-let operator = ''
+let operand = ''
 let calculatedResult = ''
-let lastKey = ''
-let regexNumbers = /[0-9]/;
 let regexOperator = /[-*+\[\]/]/
-let regexNegateOperator = /[^-*+\[\]/]/
 
 /****
  * 
@@ -92,14 +89,14 @@ function displayNumbers () {
             const lastKey = e.target.textContent
             console.log (lastKey)
 
-            //get the first number before the operator 
-            if (operator == '') {
+            //get the first number before the operand 
+            if (operand == '') {
                 firstNumber += key.textContent
                 //console.log ('logging firstNumber: ',firstNumber)
             } 
 
-            //get the second number after the operator
-            if (operator != '') {
+            //get the second number after the operand
+            if (operand != '') {
                 secondNumber += key.textContent
                 //console.log ('logging secondNumber: ',secondNumber)
             }
@@ -114,39 +111,37 @@ function displayOperator () {
     operationButtons.forEach (button => {
         button.addEventListener('click', (e) => {
             const key = button
-            const keyValue = e.target.textContent
-
+            const lastKey = e.target.textContent
+            console.log('logging lastKey: ',lastKey)
+            
             if (secondNumber != '' && lastKey.match(regexOperator)) {
-                calculatedResult = setOperation(operator,parseInt(firstNumber),parseInt(secondNumber))
+                calculatedResult = setOperation(operand,parseInt(firstNumber),parseInt(secondNumber))
                 firstNumber = calculatedResult 
                 secondNumber = '' 
-                operator = '' 
+                operand = '' 
             }
-
-            if (currentOper.textContent != '' && keyValue.match(regexOperator)) {
-                currentOper.textContent += key.textContent //updates display
-                operator = key.textContent //stores operator value
-                //console.log('logging displayOperator operator: ',operator)
-            }
- 
+            
+            currentOper.textContent += key.textContent //updates display
+            operand = key.textContent //stores operand value
+            //console.log('logging displayOperator operand: ',operand)
         })
     })
 }
 
 function displayResult () {
     equalsButton.addEventListener('click', (e) => {
-        calculatedResult = setOperation(operator,parseInt(firstNumber),parseInt(secondNumber))
+        calculatedResult = setOperation(operand,parseInt(firstNumber),parseInt(secondNumber))
 
         currentOper.textContent = calculatedResult //updates display
         console.log ('logging calculatedResult = ',calculatedResult)
         /*
          * assign calculatedResult back to first number, to chain inputs
          * reset second number, awaiting input
-         * reset operator, awaiting input
+         * reset operand, awaiting input
         */
         firstNumber = calculatedResult 
         secondNumber = '' 
-        operator = '' 
+        operand = '' 
     })
 }
 
@@ -156,6 +151,6 @@ function clearResult () {
         previousOper.textContent = ''
         firstNumber = ''
         secondNumber = ''
-        operator = ''
+        operand = ''
     })
 }
