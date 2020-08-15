@@ -10,7 +10,7 @@ https://nfordhk.github.io/calculator
 
 # Features
 All operations supported (add, subtract, multiply, divide).
-Calculations performed using order of operations or BEDMAS.
+Calculations performed using __order of operations__ or [BEDMAS](https://en.wikipedia.org/wiki/Order_of_operations#Mnemonics).
 Options include clearing the display and calculating the result.
 
 ## To Do
