@@ -20,8 +20,12 @@ const currentOper = document.querySelector('[data-current-operand]')
 
 let firstNumber = ''
 let secondNumber = ''
-let operand = ''
+let operator = ''
 let calculatedResult = ''
+let lastKey = ''
+let regexNumbers = /[0-9]/;
+let regexOperator = /[-*+\[\]/]/
+let regexNegateOperator = /[^-*+\[\]/]/
 
 /****
  * 
@@ -58,6 +62,7 @@ const setOperation = (operation, a, b) => {
             return
     }
 }
+
 /***
  * 
  * Display
@@ -83,26 +88,24 @@ updateDisplay ()
 function displayNumbers () {
     numberButtons.forEach (button => {
         button.addEventListener('click', (e) => {
-            //console.log (e.target)
             const key = button
+            const lastKey = e.target.textContent
+            console.log (lastKey)
 
-            //get the first number before the operand 
-            if (operand.length == 0) {
+            //get the first number before the operator 
+            if (operator == '') {
                 firstNumber += key.textContent
-                console.log ('logging firstNumber: ',firstNumber)
+                //console.log ('logging firstNumber: ',firstNumber)
             } 
 
-            //get the second number after the operand
-            if (operand.length == 1) {
-                console.log ('logging length',operand.length)
+            //get the second number after the operator
+            if (operator != '') {
                 secondNumber += key.textContent
-                console.log ('logging secondNumber: ',secondNumber)
+                //console.log ('logging secondNumber: ',secondNumber)
             }
-            currentOper.textContent += key.textContent
 
-            if (operand == true ) {
-                console.log ('true')
-            }
+            //keeps the display updated with keys pressed
+            currentOper.textContent += key.textContent 
         })
     })
 }
@@ -110,36 +113,49 @@ function displayNumbers () {
 function displayOperator () {
     operationButtons.forEach (button => {
         button.addEventListener('click', (e) => {
-            //console.log (e.target)
             const key = button
+            const keyValue = e.target.textContent
 
-            currentOper.textContent += key.textContent
-            operand = key.textContent //stores operand value
-            console.log('logging displayOperator operand: ',operand)
+            if (secondNumber != '' && lastKey.match(regexOperator)) {
+                calculatedResult = setOperation(operator,parseInt(firstNumber),parseInt(secondNumber))
+                firstNumber = calculatedResult 
+                secondNumber = '' 
+                operator = '' 
+            }
+
+            if (currentOper.textContent != '' && keyValue.match(regexOperator)) {
+                currentOper.textContent += key.textContent //updates display
+                operator = key.textContent //stores operator value
+                //console.log('logging displayOperator operator: ',operator)
+            }
+ 
         })
     })
 }
 
 function displayResult () {
     equalsButton.addEventListener('click', (e) => {
-        calculatedResult = setOperation(operand,Number(firstNumber),Number(secondNumber))
-        currentOper.textContent = calculatedResult
+        calculatedResult = setOperation(operator,parseInt(firstNumber),parseInt(secondNumber))
+
+        currentOper.textContent = calculatedResult //updates display
         console.log ('logging calculatedResult = ',calculatedResult)
+        /*
+         * assign calculatedResult back to first number, to chain inputs
+         * reset second number, awaiting input
+         * reset operator, awaiting input
+        */
+        firstNumber = calculatedResult 
+        secondNumber = '' 
+        operator = '' 
     })
 }
-/*
-function deleteFromDisplay () {
-    deleteButton.addEventListener('click', (e) => {
-    })
-}*/
 
 function clearResult () {
     clearButton.addEventListener('click', (e) => {
-        console.log (e)
         currentOper.textContent = ''
         previousOper.textContent = ''
         firstNumber = ''
         secondNumber = ''
-        operand = ''
+        operator = ''
     })
 }
