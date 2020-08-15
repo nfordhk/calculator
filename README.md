@@ -6,6 +6,8 @@ https://www.theodinproject.com/courses/web-development-101/lessons/calculator
 # Live Demo
 https://nfordhk.github.io/calculator
 
+![Live Demo](images/calculator-demo.gif)
+
 # Features
 All operations supported (add, subtract, multiply, divide).
 Calculations performed using order of operations or BEDMAS.
